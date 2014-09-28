@@ -11,19 +11,25 @@ app.viewmodels = app.viewmodels || {};
         }
     }); */
 
+
     scope.sendPostcard = kendo.observable({
+        contactList: [{0:'da'}],
         contacts: function () {
             var options = new ContactFindOptions();
 
             options.multiple = true;
 
-            var fields = [navigator.contacts.fieldType.id];
+            var fields = [navigator.contacts.fieldType.emails];
 
             navigator.contacts.find(fields, onSuccess, onError, options);
             
             function onSuccess(contacts) {
                 alert('Found ' + contacts.length + ' contacts.');
-                //return contacts;
+                for (var i = 0; i < contacts.length; i++) {
+                    for (var j = 0; j < contacts[i].emails.length; j++) {
+                        scope.sendPostcard.contactList.push(contacts[i].emails[j].value)
+                    }
+                }
             };
 
             function onError(contactError) {
@@ -37,76 +43,81 @@ app.viewmodels = app.viewmodels || {};
             var location = {};
             var content = this.get('content');
             var receiver = this.get('receiver');
-            var picSuccess = function (data) {
-                var id;
-                window.everlive.Files.create({
+            if (this.contactList[receiver]) {
+                alert('OK you can send postcard to this contact');
+                var picSuccess = function (data) {
+                    var id;
+                    window.everlive.Files.create({
                         Filename: Math.random().toString(36).substring(2, 15) + ".jpg",
                         ContentType: "image/jpeg",
                         base64: data
                     },
-                    function (picData) {
-                        //getgeo
-                        window.everlive.data('Postcard').create({
-                            'Pic': picData.result.Id,
-                            'Location': location,
-                            'Content': content + ' : ' + state + ' : ' + city,
-                            'Receiver': receiver
-                        }, function (data) {
-                            console.log(data);
+                        function (picData) {
+                            //getgeo
+                            window.everlive.data('Postcard').create({
+                                'Pic': picData.result.Id,
+                                'Location': location,
+                                'Content': content + ' : ' + state + ' : ' + city,
+                                'Receiver': receiver
+                            }, function (data) {
+                                console.log(data);
+                            }, error);
                         }, error);
-                    }, error);
-            };
-            var error = function () {
-                navigator.notification.alert("Unfortunately we could not add the image");
-            };
-            var picConfig = {
-                destinationType: Camera.DestinationType.DATA_URL,
-                targetHeight: 400,
-                targetWidth: 400
-            };
-
-            var geoConfig = {
-                enableHighAccuracy: true
-            };
-            var geoSuccess = function (data) {
-                location = {
-                    longitude: data.coords.longitude,
-                    latitude: data.coords.latitude
+                };
+                var error = function () {
+                    navigator.notification.alert("Unfortunately we could not add the image");
+                };
+                var picConfig = {
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    targetHeight: 400,
+                    targetWidth: 400
                 };
 
-                var lat = parseFloat(data.coords.latitude);
-                var lng = parseFloat(data.coords.longitude);
+                var geoConfig = {
+                    enableHighAccuracy: true
+                };
+                var geoSuccess = function (data) {
+                    location = {
+                        longitude: data.coords.longitude,
+                        latitude: data.coords.latitude
+                    };
 
-                var latlng = new google.maps.LatLng(lat, lng);
-                geocoder.geocode({
-                    'latLng': latlng
-                }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[0]) {
-                            var arrAddress = results[0].address_components;
-                            // iterate through address_component array
-                            $.each(arrAddress, function (i, address_component) {
-                                if (address_component.types[0] == "locality") {
-                                    city = address_component.long_name;
-                                    //return false; // break
-                                }
-                                if (address_component.types[0] == "administrative_area_level_1") {
-                                    state = address_component.long_name;
-                                    //return false;
-                                }
-                            });
+                    var lat = parseFloat(data.coords.latitude);
+                    var lng = parseFloat(data.coords.longitude);
+
+                    var latlng = new google.maps.LatLng(lat, lng);
+                    geocoder.geocode({
+                        'latLng': latlng
+                    }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                var arrAddress = results[0].address_components;
+                                // iterate through address_component array
+                                $.each(arrAddress, function (i, address_component) {
+                                    if (address_component.types[0] == "locality") {
+                                        city = address_component.long_name;
+                                        //return false; // break
+                                    }
+                                    if (address_component.types[0] == "administrative_area_level_1") {
+                                        state = address_component.long_name;
+                                        //return false;
+                                    }
+                                });
+                            } else {
+                                alert("No results found");
+                            }
                         } else {
-                            alert("No results found");
+                            alert("Geocoder failed due to: " + status);
                         }
-                    } else {
-                        alert("Geocoder failed due to: " + status);
-                    }
-                });
+                    });
 
-                navigator.camera.getPicture(picSuccess, error, picConfig);
+                    navigator.camera.getPicture(picSuccess, error, picConfig);
+                }
+                navigator.geolocation.getCurrentPosition(geoSuccess, error, geoConfig);
             }
-
-            navigator.geolocation.getCurrentPosition(geoSuccess, error, geoConfig);
+            else {
+                alert('There is no such contact');
+            }
         }
     });
 
