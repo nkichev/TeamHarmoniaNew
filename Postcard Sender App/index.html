@@ -33,7 +33,11 @@
     <script src="scripts/view-models/postcards.js"></script>
     <script src="scripts/view-models/sendPostcard.js"></script>
     <script type="text/x-kendo-template" id="postcards-item-template">
-    #: title #
+        <img src="#: imageSrc #">
+        <br/>
+        <span>#: content #</span>
+        <br/>
+        <span>#: receiver #</span>
     </script>
 </body>
 </html>
