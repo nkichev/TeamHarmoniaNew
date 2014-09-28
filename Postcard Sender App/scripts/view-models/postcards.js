@@ -3,7 +3,7 @@ app.viewmodels = app.viewmodels || {};
 
 (function (scope) {
 
-    function loadPostcards() {
+        function loadPostcards() {
         var postcards = [];
         scope.postcards = kendo.observable({
                 postcards: postcards
@@ -26,9 +26,7 @@ app.viewmodels = app.viewmodels || {};
                 })
                 
             });
-        
     };
-
 
     loadPostcards();
 
