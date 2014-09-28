@@ -12,6 +12,24 @@ app.viewmodels = app.viewmodels || {};
     }); */
 
     scope.sendPostcard = kendo.observable({
+        contacts: function () {
+            var options = new ContactFindOptions();
+
+            options.multiple = true;
+
+            var fields = [navigator.contacts.fieldType.id];
+
+            navigator.contacts.find(fields, onSuccess, onError, options);
+            
+            function onSuccess(contacts) {
+                alert('Found ' + contacts.length + ' contacts.');
+                //return contacts;
+            };
+
+            function onError(contactError) {
+                alert('Error: ' + JSON.stringify(contactError));
+            };
+        },
         save: function () {
             var geocoder = new google.maps.Geocoder();
             var city;
@@ -31,7 +49,7 @@ app.viewmodels = app.viewmodels || {};
                         window.everlive.data('Postcard').create({
                             'Pic': picData.result.Id,
                             'Location': location,
-                            'Content': content + ' ' + state + ': ' + city,
+                            'Content': content + ' : ' + state + ' : ' + city,
                             'Receiver': receiver
                         }, function (data) {
                             console.log(data);
@@ -70,13 +88,10 @@ app.viewmodels = app.viewmodels || {};
                             $.each(arrAddress, function (i, address_component) {
                                 if (address_component.types[0] == "locality") {
                                     city = address_component.long_name;
-                                    //console.log(address_component.long_name); // city
-                                    alert(address_component.long_name);
                                     //return false; // break
                                 }
-                                if (address_component.types[0] == "administrative_area_level_1"){
+                                if (address_component.types[0] == "administrative_area_level_1") {
                                     state = address_component.long_name;
-                                    alert(state);
                                     //return false;
                                 }
                             });

@@ -12,7 +12,12 @@
     <script src="https://bs-static.cdn.telerik.com/1.2.5/everlive.all.min.js"></script>
     <script src="scripts/app.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-
+    <style>
+        img {
+            border-radius: 10px;
+            border: 3px solid black;
+        }
+    </style>
 </head>
 <body>
  
@@ -36,9 +41,12 @@
     <script type="text/x-kendo-template" id="postcards-item-template">
         <img src="#: imageSrc #">
         <br/>
-        <span>#: content #</span>
+        <span>Content: <b>#: content #</b></span>
         <br/>
-        <span>#: receiver #</span>
+        <span>Send to: <b>#: receiver #</b></span>
+    </script>
+    <script type="text/x-kendo-template" id="contacts-emails-template">
+        
     </script>
 </body>
 </html>
