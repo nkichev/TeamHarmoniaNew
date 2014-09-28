@@ -2,7 +2,7 @@ var app = app || {};
 app.viewmodels = app.viewmodels || {};
 
 (function (scope) {
-    function loadPostcards(){
+    /*function loadPostcards(){
         var postcards = [];
         window.everlive.data('Postcard').get().then(function(data){
             data.result.forEach(function(postcard){
@@ -12,13 +12,14 @@ app.viewmodels = app.viewmodels || {};
             })
             return postcards;
         });
-    };
+    };*/
     
     
-    scope.postcards = function(e){
+    
+    /*scope.postcards = function(e){
         var vm = kendo.observable({
             postcards: loadPostcards()
         });
         kendo.bind(e.view.element, vm);
-    };    
+    };  */  
 }(app.viewmodels));
