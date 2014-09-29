@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title></title>
     <meta charset="utf-8" />
     <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
@@ -10,43 +12,94 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
     <script src="https://bs-static.cdn.telerik.com/1.2.5/everlive.all.min.js"></script>
-    <script src="scripts/app.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/applicationConnectionChecker.js"></script>
+    <script src="scripts/view-models/applicationHelper.js"></script>
+    <!--<script src="scripts/view-models/applicationGeocoder.js"></script>-->
+
     <style>
         img {
-            border-radius: 10px;
-            border: 3px solid black;
+            width: 280px;
+            border-radius: 15px;
+        }
+
+        #listItem {
+            border: 1px solid black;
+        }
+
+        input {
+            font-size: 19px;
+            color: dimgray;
+            text-align: center;
+        }
+
+        #tb-contact {
+            height: 40px;
+            width: 180px;
+        }
+
+        #tb-receiver {
+            height: 40px;
+            width: 280px;          
+        }
+
+        #tb-content {
+            height: 90px;
+            width: 290px;
+            font-size: 19px;
+            color: dimgray;
+            resize:none
+        }
+
+        button {
+            height: 45px;
+            width: 85px;
+            color: white;
+            background-color: #10C4B2;
+            border: none;
+            font-size: 18px;
+        }
+
+        button#btn-send {
+            width: 135px;
+            height: 55px;
+        }
+
+        label {
+            font-size:22px;
+            height: 51px;
         }
     </style>
+    
 </head>
+
 <body>
- 
     <div data-role="layout" data-id="main">
         <div data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
             </div>
         </div>
-        
+
         <div data-role="footer">
             <div data-role="tabstrip">
                 <a href="views/postcards.html" data-icon="mostviewed">Postcards</a>
-                <a href="views/sendPostcard.html" data-icon="compose">Send</a>  
+                <a href="views/sendPostcard.html" data-icon="compose">Send</a>
             </div>
         </div>
     </div>
-    
+
     <script src="scripts/view-models/postcards.js"></script>
     <script src="scripts/view-models/sendPostcard.js"></script>
     <script type="text/x-kendo-template" id="postcards-item-template">
-        <img src="#: imageSrc #">
-        <br/>
-        <span>Content: <b>#: content #</b></span>
-        <br/>
-        <span>Send to: <b>#: receiver #</b></span>
-    </script>
-    <script type="text/x-kendo-template" id="contacts-emails-template">
-        
+        <li id="listItem">
+            <img src="#: imageSrc #" />
+            <span>Content: #: content #</span>
+            <hr />
+            <span>Sent to: #: receiver #</span>
+        </li>
     </script>
 </body>
+
 </html>

@@ -1,18 +1,24 @@
 <div data-role="view" data-layout="main" data-title="Send a postcard" data-model="app.viewmodels.sendPostcard">
     <div style="text-align:center">
-        <br/>
-        <label for="tb-receiver">Send to:</label>
-        <br/>
-        <input id="tb-receiver" type="text" data-bind="value: receiver" />
-        <br/>
-        <label for="tb-content">Content:</label>
-        <br/>
-        <textarea id="tb-content" style="resize:none; height: 150px; width: 280px; font-size: 15px" data-bind="value: content"></textarea>
-        <br/>
-        <button style="background-color:#10C4B2; color: white; size: 26px;" data-role="button" data-bind="events:{click: contacts}">
-            Check for contacts
+        <br />
+        <label for="tb-contact" >Check for contact E-mail:</label>
+        <br />
+        <input id="tb-contact" type="text" data-bind="value: contactName" />
+        <button data-bind="events:{click: check}">
+            Check
         </button>
-        <button style="background-color:#10C4B2; color: white; size: 26px;" data-role="button" data-bind="events:{click: save}">
+        <br />
+        <br />
+        <hr />
+        <label for="tb-receiver">Send to:</label>
+        <br />
+        <input id="tb-receiver" type="text" data-bind="value: receiver" />
+        <br />
+        <label for="tb-content">Content:</label>
+        <br />
+        <textarea id="tb-content" data-bind="value: content"></textarea>
+        <br />
+        <button id="btn-send" data-bind="events:{click: save}">
             Send
         </button>
     </div>
