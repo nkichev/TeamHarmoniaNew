@@ -28,6 +28,9 @@ app.helper = app.helper || {};
                         type: "POST",
                         url: 'http://api.everlive.com/v1/P7b0o35jcf7ft5Uk/functions/SendEMail',
                         contentType: "application/json",
+                        headers: {
+                            'Authorization': 'bearer ' + window.localStorage.getItem('userAuthentication')
+                        },
                         data: JSON.stringify(attributes),
 
                         success: function (data) {
@@ -37,7 +40,7 @@ app.helper = app.helper || {};
                             $('#tb-contact').val(' ');
                         },
                         error: function (error) {
-                            alert(JSON.stringify(error));
+                            navigator.notification.alert(JSON.stringify(error));
                         }
                     })
                 })

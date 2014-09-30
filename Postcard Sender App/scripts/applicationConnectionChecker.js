@@ -1,5 +1,4 @@
-/// <reference path="..//cordova.js/cordova.android.js" />
-/*global window, navigator*/
+
 var app = app || {};
 app.Connection = app.Connection || {};
 

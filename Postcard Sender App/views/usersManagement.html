@@ -1,0 +1,35 @@
+<div data-role="view" data-layout="home" data-title="Home" data-model="app.viewmodels.usersManagement">
+    <div style="text-align:center">
+        <fieldset>
+            <legend>Registration:</legend>
+            <label for="tb-register-username">Username:</label>
+            <br />
+            <input id="tb-register-username" type="text" data-bind="value: registerUsername" />
+            <br />
+            <label for="tb-register-fullName">Full Name:</label>
+            <br />
+            <input id="tb-register-fullName" type="text" data-bind="value: registerFullName" />
+            <br />
+            <label for="tb-register-password">Password:</label>
+            <br />
+            <input id="tb-register-password" type="password" data-bind="value: registerPassword" />
+            <button data-role="button" style="background-color: #10C4B2;" data-bind="events:{click: register}">
+                Register
+            </button>
+        </fieldset>
+        <fieldset>
+            <legend>Login:</legend>
+
+            <label for="tb-login-username">Username:</label>
+            <br />
+            <input id="tb-login-username" type="text" data-bind="value: loginUsername" />
+            <br />
+            <label for="tb-login-password">Password:</label>
+            <br />
+            <input id="tb-login-password" type="password" data-bind="value: loginPassword" />
+            <button data-role="button" style="background-color: #10C4B2;" data-bind="events:{click: login}">
+                Login
+            </button>
+        </fieldset>
+    </div>
+</div>

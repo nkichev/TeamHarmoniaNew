@@ -11,12 +11,13 @@
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script src="scripts/libs/q.js"></script>
     <script src="https://bs-static.cdn.telerik.com/1.2.5/everlive.all.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/applicationConnectionChecker.js"></script>
     <script src="scripts/view-models/applicationHelper.js"></script>
-    <!--<script src="scripts/view-models/applicationGeocoder.js"></script>-->
+    <script src="scripts/view-models/applicationGeocoder.js"></script>
 
     <style>
         img {
@@ -32,6 +33,12 @@
             font-size: 19px;
             color: dimgray;
             text-align: center;
+            box-shadow: inset 0 0 0 1px #999
+        }
+
+        textarea{
+            border: 3px inset #ccc;
+
         }
 
         #tb-contact {
@@ -41,7 +48,7 @@
 
         #tb-receiver {
             height: 40px;
-            width: 280px;          
+            width: 280px;
         }
 
         #tb-content {
@@ -49,7 +56,7 @@
             width: 290px;
             font-size: 19px;
             color: dimgray;
-            resize:none
+            resize: none;
         }
 
         button {
@@ -61,17 +68,22 @@
             font-size: 18px;
         }
 
-        button#btn-send {
-            width: 135px;
-            height: 55px;
-        }
+            button#btn-send {
+                width: 135px;
+                height: 55px;
+            }
 
         label {
-            font-size:22px;
-            height: 51px;
+            font-size: 18px;
+            height: 50px;
+        }
+
+        legend {
+            text-align:left;
+            font-size: 18px;
         }
     </style>
-    
+
 </head>
 
 <body>
@@ -79,6 +91,7 @@
         <div data-role="header">
             <div data-role="navbar">
                 <span data-role="view-title"></span>
+                <a data-role="button" data-align="right" href="views/usersManagement.html" data-click="onClickLogout">Logout</a>
             </div>
         </div>
 
@@ -90,6 +103,15 @@
         </div>
     </div>
 
+    <div data-role="layout" data-id="home">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/view-models/usersManagment.js"></script>
     <script src="scripts/view-models/postcards.js"></script>
     <script src="scripts/view-models/sendPostcard.js"></script>
     <script type="text/x-kendo-template" id="postcards-item-template">

@@ -19,19 +19,17 @@ app.viewmodels = app.viewmodels || {};
                     } 
                 }
                 function onError() {
-                    alert("No email for this contact. Please insert it manually or check your input!")
+                    navigator.notification.alert("No email for this contact. Please insert it manually or check your input!")
                 }
 
                 navigator.contacts.find(fields, onSuccess, onError, options);
             }
         },
         save: function () {
-            //var isconnected = app.Connection.isConnected();
             if (app.Connection.isConnected()) {
                 var geocoder = new google.maps.Geocoder();
                 var city;
                 var state;
-                //var locationDetails = {};
                 var location = {};
                 var content = this.get('content');
                 var receiver = this.get('receiver');
@@ -44,7 +42,6 @@ app.viewmodels = app.viewmodels || {};
                             ContentType: "image/jpeg",
                             base64: data
                         }, function (picData) {
-                            //getgeo
                             window.everlive.data('Postcard').create({
                                 'Pic': picData.result.Id,
                                 'Location': location,
@@ -85,23 +82,14 @@ app.viewmodels = app.viewmodels || {};
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (results[0]) {
                                     var arrAddress = results[0].address_components;
-                                    // iterate through address_component array
                                     $.each(arrAddress, function (i, address_component) {
                                         if (address_component.types[0] == "locality") {
                                             city = address_component.long_name;
-                                            //console.log(address_component.long_name); // citys
-                                            //return false; // break
                                         }
                                         if (address_component.types[0] == "administrative_area_level_1") {
                                             state = address_component.long_name;
-                                            //return false;
                                         }
                                     });
-
-                                    //return {
-                                    //    city: city,
-                                    //    state: state
-                                    //};
                                 } else {
                                     alert("No results found");
                                 }
@@ -109,14 +97,13 @@ app.viewmodels = app.viewmodels || {};
                                 alert("Geocoder failed due to: " + status);
                             }
                         });
-                        //locationDetails = app.Geocoder.GetLocationDetails(lat, lng);
                         navigator.camera.getPicture(picSuccess, error, picConfig);
                     }
 
                     navigator.geolocation.getCurrentPosition(geoSuccess, error, geoConfig);
                 }
                 else {
-                    alert('You must enter a correct email address ');
+                    navigator.notification.alert('You must enter a correct email address ');
                 }
             }
         }
